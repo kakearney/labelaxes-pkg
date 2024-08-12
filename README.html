@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>labelaxes.m: Quick placement of text in or around a Matlab axis</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-08-12">
+<meta name="DC.source" content="./readmeExtras/README.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>
+<tt>labelaxes.m</tt>: Quick placement of text in or around a Matlab axis</h1>
+<!--introduction-->
+<p>Author: Kelly Kearney</p>
+<p>This repository includes the code for the <tt>labelaxes.m</tt> Matlab function, along with all dependent functions required to run it.</p>
+<p>This function places text in an axis based on location strings similar to those used by legend. It can be useful when labeling subaxes.</p>
+<p>This function is based on the <a href="https://www.mathworks.com/matlabcentral/fileexchange/17151-textloc">textLoc</a> function (written by Ben Barrowes), but with a few extra features for added flexibility: it allows for application of labels to multiple axes at once, and provides more flexibility when specifying the buffers.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Getting started</a>
+</li>
+<li>
+<a href="#2">Syntax</a>
+</li>
+<li>
+<a href="#3">Description</a>
+</li>
+<li>
+<a href="#4">Examples</a>
+</li>
+<li>
+<a href="#5">Example 1: Default locations</a>
+</li>
+<li>
+<a href="#6">Example 2: Labeling subplots</a>
+</li>
+<li>
+<a href="#7">Contributions</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Getting started</h2>
+<p>
+<b>Prerequisites</b>
+</p>
+<p>This function is compatible with Matlab R2007a and later.</p>
+<p>
+<b>Downloading and installation</b>
+</p>
+<p>This code can be downloaded from <a href="https://github.com/kakearney/labelaxes-pkg/">Github</a>
+</p>
+<p>
+<b>Matlab Search Path</b>
+</p>
+<p>The following folders need to be added to your Matlab Search path (via <tt>addpath</tt>, <tt>pathtool</tt>, etc.):</p>
+<pre class="language-matlab">labelaxes-pkg/labelaxes
+</pre>
+<h2 id="2">Syntax</h2>
+<pre>htxt = labelaxes(ax, labels, location)
+htxt = labelaxes(ax, labels, location, Name, Value, ...)</pre>
+<h2 id="3">Description</h2>
+<p>
+<tt>htxt = labelaxes(ax, labels, location)</tt> places the text in the string or cell array of character vectors <tt>labels</tt> on the respective axes <tt>ax</tt> in the location indicated by <tt>location</tt>. The <tt>ax</tt> and <tt>labels</tt> arrays can be any size but must include the same number of elements.  <tt>location</tt> can be any of the following (see example for default placement):</p>
+<pre>'North'                   inside plot box near top
+'South'                   inside bottom
+'East'                    inside right
+'West'                    inside left
+'Center'                  centered on plot
+'NorthEast'               inside top right (default)
+'NorthWest'               inside top left
+'SouthEast'               inside bottom right
+'SouthWest'               inside bottom left
+'NorthOutside'            outside plot box near top
+'SouthOutside'            outside bottom
+'EastOutside'             outside right
+'WestOutside'             outside left
+'NorthEastOutside'        outside top right
+'NorthWestOutside'        outside top left
+'SouthEastOutside'        outside bottom right
+'SouthWestOutside'        outside bottom left
+'NorthEastOutsideAbove'   outside top right (above)
+'NorthWestOutsideAbove'   outside top left (above)
+'SouthEastOutsideBelow'   outside bottom right (below)
+'SouthWestOutsideBelow'   outside bottom left (below)</pre>
+<p>
+<tt>labelaxes(..., 'hbuffer', buf)</tt>, <tt>labelaxes(..., 'vbuffer', buf)</tt> alter the default spacing between axis anchor point and the horizontally- and vertically-aligned side of each text label (not applicable to center- and middle-aligned locations). Default is 1/50.</p>
+<p>
+<tt>labelaxes(..., 'hbufferunt', unit)</tt>, <tt>labelaxes(..., 'hbufferunt', unit)</tt> sets the unit used for the label. All text labels will be placed using normalized axes coordinates, but the buffer can be set using any valid axis units. Default is 'normalized'.</p>
+<h2 id="4">Examples</h2>
+<h2 id="5">Example 1: Default locations</h2>
+<p>The default locations are as follows.</p>
+<pre class="codeinput">hax = axes(<span class="string">'position'</span>, [0.2 0.2 0.6 0.6], <span class="keyword">...</span>
+    <span class="string">'xtick'</span>, [], <span class="string">'ytick'</span>, [], <span class="string">'box'</span>, <span class="string">'on'</span>);
+
+locs = [<span class="keyword">...</span>
+<span class="string">"North"</span>
+<span class="string">"South"</span>
+<span class="string">"East"</span>
+<span class="string">"West"</span>
+<span class="string">"Center"</span>
+<span class="string">"NorthEast"</span>
+<span class="string">"NorthWest"</span>
+<span class="string">"SouthEast"</span>
+<span class="string">"SouthWest"</span>
+<span class="string">"NorthOutside"</span>
+<span class="string">"SouthOutside"</span>
+<span class="string">"EastOutside"</span>
+<span class="string">"WestOutside"</span>
+<span class="string">"NorthEastOutside"</span>
+<span class="string">"NorthWestOutside"</span>
+<span class="string">"SouthEastOutside"</span>
+<span class="string">"SouthWestOutside"</span>
+<span class="string">"NorthEastOutsideAbove"</span>
+<span class="string">"NorthWestOutsideAbove"</span>
+<span class="string">"SouthEastOutsideBelow"</span>
+<span class="string">"SouthWestOutsideBelow"</span>];
+
+htxt = gobjects(size(locs));
+<span class="keyword">for</span> ii = 1:length(locs)
+    htxt(ii) = labelaxes(hax, locs(ii), locs(ii));
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="./readmeExtras/README_01.png" alt=""> <h2 id="6">Example 2: Labeling subplots</h2>
+<p>This function is particularly useful when labeling multiple subplots at once. Note that it also supports multiline text, and accepts text property options.</p>
+<pre class="codeinput">
+<span class="keyword">for</span> ii = 1:4
+    hax(ii) = subplot(2,2,ii);
+<span class="keyword">end</span>
+hax(4).Position(3) = 0.4;
+
+htxt = labelaxes(hax, [<span class="string">"A)"</span>, <span class="string">"B)"</span>, <span class="string">"C)"</span>, <span class="string">"D)"</span>], <span class="string">'northwestoutside'</span>, <span class="keyword">...</span>
+    <span class="string">'fontweight'</span>, <span class="string">'b'</span>, <span class="string">'fontsize'</span>, 12, <span class="string">'hbuffer'</span>, 0.3, <span class="string">'hbufferunit'</span>, <span class="string">'inch'</span>);
+
+hxt = labelaxes(hax, {[<span class="string">"We can add"</span>, <span class="string">"some multiline text"</span>], <span class="keyword">...</span>
+                      {<span class="string">'labelaxes accepts either'</span>, <span class="keyword">...</span>
+                       <span class="string">'string arrays or cell'</span>, <span class="keyword">...</span>
+                       <span class="string">'arrays of character'</span>, <span class="keyword">...</span>
+                       <span class="string">'vectors for multiline'</span>, <span class="keyword">...</span>
+                       <span class="string">'text'</span>}, <span class="string">'and mixed arrays too!'</span>, <span class="keyword">...</span>
+                       [<span class="string">"changing the buffer unit"</span>, <span class="string">"is useful to align"</span>, <span class="keyword">...</span>
+                        <span class="string">"labels across"</span>, <span class="string">"differently-sized axes"</span>, <span class="keyword">...</span>
+                        <span class="string">"as with the A)-D) labels"</span> <span class="string">"in this figure"</span>]}, <span class="string">'center'</span>, <span class="keyword">...</span>
+                       <span class="string">'color'</span>, [1 0 0]);
+</pre>
+<img vspace="5" hspace="5" src="./readmeExtras/README_02.png" alt=""> <h2 id="7">Contributions</h2>
+<p>Community contributions to this package are welcome!</p>
+<p>To report bugs, please submit <a href="https://github.com/kakearney/example-pkg/issues">an issue</a> on GitHub and include:</p>
+<div>
+<ul>
+<li>your operating system</li>
+<li>your version of Matlab and all relevant toolboxes (type <tt>ver</tt> at the Matlab command line to get this info)</li>
+<li>code/data to reproduce the error or buggy behavior, and the full text of any error messages received</li>
+</ul>
+</div>
+<p>Please also feel free to submit enhancement requests, or to send pull requests (via GitHub) for bug fixes or new features.</p>
+<p>I do monitor the MatlabCentral FileExchange entry for any issues raised in the comments, but would prefer to track issues on GitHub.</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% |labelaxes.m|: Quick placement of text in or around a Matlab axis
+% Author: Kelly Kearney
+%
+% This repository includes the code for the |labelaxes.m| Matlab
+% function, along with all dependent functions required to run it.  
+%
+% This function places text in an axis based on location strings similar to
+% those used by legend.  It can be useful when labeling subaxes.
+% 
+% This function is based on the <https://www.mathworks.com/matlabcentral/fileexchange/17151-textloc textLoc>
+% function (written by Ben Barrowes), but with a few extra features for
+% added flexibility: it allows for application of labels to multiple axes
+% at once, and provides more flexibility when specifying the buffers.  
+%
+%% Getting started
+%
+% *Prerequisites*
+%
+% This function is compatible with Matlab R2007a and later.
+%
+% *Downloading and installation*
+%
+% This code can be downloaded from <https://github.com/kakearney/labelaxes-pkg/ Github>
+%
+% *Matlab Search Path*
+%
+% The following folders need to be added to your Matlab Search path (via
+% |addpath|, |pathtool|, etc.):
+%
+%   labelaxes-pkg/labelaxes
+
+%% Syntax
+%
+%  htxt = labelaxes(ax, labels, location) 
+%  htxt = labelaxes(ax, labels, location, Name, Value, ...)
+%
+%% Description
+%
+% |htxt = labelaxes(ax, labels, location)| places the text in the string or
+% cell array of character vectors |labels| on the respective axes |ax| in
+% the location indicated by |location|.  The |ax| and |labels| arrays can
+% be any size but must include the same number of elements.  |location| can
+% be any of the following (see example for default placement):
+%
+%  'North'                   inside plot box near top
+%  'South'                   inside bottom
+%  'East'                    inside right
+%  'West'                    inside left
+%  'Center'                  centered on plot
+%  'NorthEast'               inside top right (default)
+%  'NorthWest'               inside top left
+%  'SouthEast'               inside bottom right
+%  'SouthWest'               inside bottom left
+%  'NorthOutside'            outside plot box near top
+%  'SouthOutside'            outside bottom
+%  'EastOutside'             outside right
+%  'WestOutside'             outside left
+%  'NorthEastOutside'        outside top right
+%  'NorthWestOutside'        outside top left
+%  'SouthEastOutside'        outside bottom right
+%  'SouthWestOutside'        outside bottom left
+%  'NorthEastOutsideAbove'   outside top right (above)
+%  'NorthWestOutsideAbove'   outside top left (above)
+%  'SouthEastOutsideBelow'   outside bottom right (below)
+%  'SouthWestOutsideBelow'   outside bottom left (below)
+%
+% |labelaxes(..., 'hbuffer', buf)|, |labelaxes(..., 'vbuffer', buf)| alter
+% the default spacing between axis anchor point and the horizontally- and
+% vertically-aligned side of each text label (not applicable to center- and
+% middle-aligned locations).  Default is 1/50.
+%
+% |labelaxes(..., 'hbufferunt', unit)|, |labelaxes(..., 'hbufferunt',
+% unit)| sets the unit used for the label.  All text labels will be placed
+% using normalized axes coordinates, but the buffer can be set using any
+% valid axis units. Default is 'normalized'.
+
+%% Examples
+
+%% Example 1: Default locations
+%
+% The default locations are as follows.
+
+hax = axes('position', [0.2 0.2 0.6 0.6], ...
+    'xtick', [], 'ytick', [], 'box', 'on');
+
+locs = [...
+"North"                
+"South"                
+"East"                
+"West"                 
+"Center"               
+"NorthEast"            
+"NorthWest"            
+"SouthEast"            
+"SouthWest"            
+"NorthOutside"         
+"SouthOutside"         
+"EastOutside"          
+"WestOutside"          
+"NorthEastOutside"     
+"NorthWestOutside"     
+"SouthEastOutside"     
+"SouthWestOutside"     
+"NorthEastOutsideAbove"
+"NorthWestOutsideAbove"
+"SouthEastOutsideBelow"
+"SouthWestOutsideBelow"];
+
+htxt = gobjects(size(locs));
+for ii = 1:length(locs)
+    htxt(ii) = labelaxes(hax, locs(ii), locs(ii));
+end
+
+%% Example 2: Labeling subplots
+%
+% This function is particularly useful when labeling multiple subplots at
+% once.  Note that it also supports multiline text, and accepts text
+% property options.
+
+for ii = 1:4
+    hax(ii) = subplot(2,2,ii);
+end
+hax(4).Position(3) = 0.4;
+
+htxt = labelaxes(hax, ["A)", "B)", "C)", "D)"], 'northwestoutside', ...
+    'fontweight', 'b', 'fontsize', 12, 'hbuffer', 0.3, 'hbufferunit', 'inch');
+
+hxt = labelaxes(hax, {["We can add", "some multiline text"], ...
+                      {'labelaxes accepts either', ...
+                       'string arrays or cell', ...
+                       'arrays of character', ...
+                       'vectors for multiline', ...
+                       'text'}, 'and mixed arrays too!', ...
+                       ["changing the buffer unit", "is useful to align", ...
+                        "labels across", "differently-sized axes", ...
+                        "as with the A)-D) labels" "in this figure"]}, 'center', ...
+                       'color', [1 0 0]);
+
+
+%% Contributions
+%
+% Community contributions to this package are welcome!
+% 
+% To report bugs, please submit
+% <https://github.com/kakearney/example-pkg/issues an issue> on GitHub and
+% include:  
+% 
+% * your operating system
+% * your version of Matlab and all relevant toolboxes (type |ver| at the Matlab command line to get this info)  
+% * code/data to reproduce the error or buggy behavior, and the full text of any error messages received 
+% 
+% Please also feel free to submit enhancement requests, or to send pull
+% requests (via GitHub) for bug fixes or new features. 
+% 
+% I do monitor the MatlabCentral FileExchange entry for any issues raised
+% in the comments, but would prefer to track issues on GitHub. 
+% 
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>
+
